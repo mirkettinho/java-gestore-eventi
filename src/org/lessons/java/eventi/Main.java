@@ -2,7 +2,9 @@ package org.lessons.java.eventi;
 
 
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.format.DateTimeParseException;
 import java.util.Scanner;
 
@@ -12,9 +14,11 @@ public class Main {
 		
 		Scanner sc = new Scanner(System.in);
 		boolean isValid = false;
-		Evento event = null;
+		Concerto concert = null;
 		String titleInput = null;
 		LocalDate dateInput = null;
+		LocalTime timeInput = null;
+		BigDecimal priceInput = null;
 		int numSeatsInput = 0;
 		int numBookedInput = 0;
 		
@@ -28,7 +32,7 @@ public class Main {
            
                 System.out.println("---------");
 
-                while (event == null) {
+                while (concert == null) {
                 	
                 try {
                 	///TITLE
@@ -37,13 +41,19 @@ public class Main {
                     ///DATE
                     System.out.print("Date: -> (yyyy-mm-dd) ");
                     dateInput = LocalDate.parse(sc.nextLine());
+                    ///TIME
+                    System.out.println("Time: => (hh:mm:ss)");
+                    timeInput = LocalTime.parse(sc.nextLine());
                     ///NUM SEATS
                     System.out.print("Num seats: ");
                     numSeatsInput = Integer.parseInt(sc.nextLine());
+                    ///PRICE
+                    System.out.println("Price: ");
+                    priceInput = new BigDecimal(sc.nextLine());
                     
-                    event = new Evento(titleInput, dateInput, numSeatsInput);
-                    System.out.println(event);
-                    System.out.println("Num seats: "+event.getNumSeats());
+                    concert = new Concerto(titleInput, dateInput, numSeatsInput, timeInput, priceInput);
+                    System.out.println(concert);
+                    System.out.println("Num seats: "+concert.getNumSeats());
                     System.out.println("---------");
                     
 	                } catch (DateTimeParseException e) {
@@ -77,12 +87,12 @@ public class Main {
                     
 	                    case "1":
 	                        try {
-		                        System.out.println("Add number of bookings: ");
+		                        System.out.println("Enter the number of seats you want to book: ");
 		                        numBookedInput = Integer.parseInt(sc.nextLine());
-		                        event.book(numBookedInput);
-		                        System.out.println("Total number of bookings: "+event.getNumBooked());
-		                        event.seatsAvailable();
-		                        System.out.println("Remaining seats: "+event.getSeatsAvailable());
+		                        concert.book(numBookedInput);
+		                        System.out.println("Total number of bookings: "+concert.getNumBooked());
+		                        concert.seatsAvailable();
+		                        System.out.println("Remaining seats: "+concert.getSeatsAvailable());
 		                        
 	                        }catch (NumberFormatException e) {
 	                        	
@@ -99,9 +109,9 @@ public class Main {
 	                        try {
 		                        System.out.println("Add number of bookings you want to cancel: ");
 		                        numBookedInput = Integer.parseInt(sc.nextLine());
-		                        event.cancel(numBookedInput);
-		                        event.seatsAvailable();
-		                        System.out.println("Remaining seats: "+event.getSeatsAvailable());
+		                        concert.cancel(numBookedInput);
+		                        concert.seatsAvailable();
+		                        System.out.println("Remaining seats: "+concert.getSeatsAvailable());
 		                        
 	                        }catch (NumberFormatException e) {
 	                        	
