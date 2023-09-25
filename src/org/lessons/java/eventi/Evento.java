@@ -8,6 +8,7 @@ public class Evento {
 	private LocalDate date;
 	private int numSeats;
 	private int numBooked;
+	private int seatsAvailable;
 	
 	public Evento (String title, LocalDate date, int numSeats) throws Exception {
 		
@@ -15,6 +16,7 @@ public class Evento {
         this.date = dateCheck(date);
         this.numSeats = seatsCheck(numSeats);
         numBooked = 0;
+        this.seatsAvailable = numSeats;
 	}
 	
 	///TITLE
@@ -52,6 +54,12 @@ public class Evento {
 		return numBooked;
 	}
 	
+	///SEATS AVAILABLE
+	public int getSeatsAvailable() {
+		
+		return seatsAvailable;
+	}
+	
 	///RESERVATION
 	public void book(int reservation) throws Exception {
 		
@@ -62,7 +70,7 @@ public class Evento {
 					+ "-places filled.");
 		}
 		
-		numBooked = numBooked + reservation;
+		numBooked += reservation;
 	}
 	
 	///CANCELLATION
@@ -75,9 +83,14 @@ public class Evento {
 					+ "-there are no reservations.");
 		}
 		
-		numBooked = numBooked - cancellation;
+		numBooked -= cancellation;
 	}
 	
+	///SEATS AVAILABLE
+	public void seatsAvailable() {
+		
+		seatsAvailable = numSeats - numBooked;
+	}
 	///DATE CHECK
 	private LocalDate dateCheck(LocalDate date) throws Exception {
 		
@@ -103,6 +116,6 @@ public class Evento {
 	@Override
 	public String toString() {
 		
-		return "Date :" + date + "Title :" + title;
+		return "Date: " + date + " Title: " + title;
 	}
 }
